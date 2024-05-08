@@ -115,3 +115,18 @@ def UpdateNotes(table,csv_dict,joinfield,notesfield):
                 if folder != "":
                     notes_list = updatefield + ": "+ folder
             arcpy.AddMessage (notes_list)
+
+
+def replace_underscore(input_string):
+    modified_string = input_string.replace("_", "%5F").upper()
+    return modified_string
+
+
+def pdf_link(filename,foldern):
+    file_name2 = replace_underscore(filename)
+    file_type = ".pdf"
+    file1 = 'https://hawaiioimt-my.sharepoint.com/personal/christopher_guerin_hawaii_gov/_layouts/15/onedrive.aspx?ga=1&id=%2Fpersonal%2Fchristopher%5Fguerin%5Fhawaii%5Fgov%2FDocuments%2FDescription%20Folder%2F'
+    file2 = "%2Epdf&parent=%2Fpersonal%2Fchristopher%5Fguerin%5Fhawaii%5Fgov%2FDocuments%2FDescription%20Folder%2F"
+    file3 = '</a>'
+    linked_pdf = file1+str(foldern)+"%2F"+file_name2+file2+str(foldern)
+    return linked_pdf

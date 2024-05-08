@@ -104,11 +104,12 @@ with arcpy.da.SearchCursor(Records,'ProjectID')as sc:
                                     project_id,project_name1,global_id1 = c
                                     if project_name == project_name1 and global_id == global_id1:
                                         file_name = f"{fc}_{project_name}"
-                                        #arcpy.AddMessage(file_name)
-                                        #rcpy.AddMessage(fc_filenames)
                                         if file_name in fc_filenames:
                                             #arcpy.AddMessage("match")
-                                            row[2] = utilities.d1 +target_desc+utilities.d4 + file_name + filetype
+                                            file_mod = utilities.replace_underscore(file_name)
+                                            pdf_link_string = utilities.pdf_link(file_mod,target_desc)
+                                            #arcpy.AddMessage(pdf_link_string)
+                                            row[2] = pdf_link_string
                                             cursor.updateRow(row)
                                             #arcpy.AddMessage (f'updated {file_name}')
                         # Stop the edit operation.
@@ -118,7 +119,7 @@ with arcpy.da.SearchCursor(Records,'ProjectID')as sc:
 
 #arcpy.AddMessage("Error occured updating the Parcels table")
 
-"""
+
 
 #### create links to the folders in the Records table (folder values come from reading csv file)
 
@@ -186,4 +187,3 @@ with arcpy.da.UpdateCursor(Records,['ProjectID','Notes']) as cursor:
             row[1] = "<Null>"
             cursor.updateRow(row)
     
-"""
